@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Estado Mesas Quirúrgicas</title>
+    <!-- Carga de Tailwind CSS para un diseño moderno y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados para la tipografía y el fondo */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Un gris azulado claro para un fondo suave */
+            color: #334155; /* Texto oscuro para buena legibilidad */
+        }
+        /* Estilos para el contenedor principal */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        /* Estilos para los botones de quirófano */
+        .quir-button {
+            background-color: #3b82f6; /* Azul vibrante */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* Bordes muy redondeados */
+            font-weight: bold;
+            font-size: 1.125rem; /* Tamaño de fuente ligeramente más grande */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+            transition: all 0.3s ease-in-out; /* Transición suave para hover */
+            cursor: pointer;
+            margin: 0.75rem; /* Espacio entre botones */
+            text-decoration: none; /* Quitar subrayado de enlaces */
+            display: inline-flex; /* Para centrar el texto verticalmente */
+            align-items: center;
+            justify-content: center;
+        }
+        .quir-button:hover {
+            background-color: #2563eb; /* Azul más oscuro al pasar el ratón */
+            transform: translateY(-3px); /* Efecto de elevación */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Sombra más pronunciada */
+        }
+        /* Estilos para la subpágina de detalles del quirófano */
+        .quir-detail-page {
+            background-color: white;
+            border-radius: 1.5rem; /* Bordes redondeados */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            animation: fadeIn 0.5s ease-out forwards; /* Animación de entrada */
+        }
+        .quir-detail-page img {
+            border-radius: 0.75rem; /* Bordes redondeados para imágenes */
+            margin-top: 1rem;
+            width: 100%; /* Imágenes responsivas */
+            height: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        /* Animación de entrada */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Estilos para el botón de volver */
+        .back-button {
+            background-color: #64748b; /* Gris suave */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+        .back-button:hover {
+            background-color: #475569; /* Gris más oscuro al pasar el ratón */
+            transform: translateY(-2px);
+        }
+        /* Estilos para el texto de detalles */
+        .detail-text {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .detail-text strong {
+            color: #1e293b; /* Color más oscuro para los títulos de los detalles */
+        }
+        /* Media queries para responsividad */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            .quir-button {
+                width: 100%; /* Botones de ancho completo en móviles */
+                max-width: 300px; /* Ancho máximo para evitar que sean demasiado grandes */
+            }
+            .quir-detail-page {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Página principal -->
+    <div id="mainPage" class="main-container">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-center mb-12 leading-tight">Análisis Estado Mesas Quirúrgicas</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Los botones se generarán dinámicamente aquí -->
+        </div>
+    </div>
+
+    <!-- Contenedor para las páginas de detalle de los quirófanos -->
+    <div id="quirDetailContainer">
+        <!-- Las páginas de detalle se generarán dinámicamente aquí -->
+    </div>
+
+    <script>
+        // Datos de los quirófanos extraídos del documento de Word
+        const quirurgosData = [
+            {
+                id: 'Q1',
+                marca: 'GETINGE',
+                modelo: 'ALPHAMAX',
+                anio: '2007',
+                observaciones: 'La mesa se encuentra en buen estado y las mayores averías que sufre son referentes al mando, que debido a su manipulación, se cae, se golpea y termina rompiéndose. Hay repuestos por lo que no hay problema en este sentido.',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q1-1' // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q2',
+                marca: 'GETINGE',
+                modelo: 'ALPHAMAX',
+                anio: '2007',
+                observaciones: 'La mesa se encuentra en buen estado y las mayores averías que sufre son referentes al mando, que debido a su manipulación, se cae, se golpea y termina rompiéndose. Hay repuestos por lo que no hay problema en este sentido.',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q2-1' // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q3',
+                marca: 'GETINGE',
+                modelo: 'MEERA',
+                anio: '2020',
+                observaciones: 'Una de las mejores mesas que tenemos. Las averías mas frecuentes son en el mando aunque ha sufrido daños en la zona de conexión al bloque. Por el momento funciona con normalidad y hemos procedido a adecuar las zonas rotas. En caso de dar problemas requerirá presupuesto de reparación',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q3-1', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q3-2', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q3-3'  // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q4',
+                marca: 'STERIS',
+                modelo: 'CMAX',
+                anio: '2020',
+                observaciones: 'Mesa en buen estado de la marca Steris, mas económica que las Getinge. No agrada tanto a los cirujanos por las limitaciones de movimiento. Para la mayoría de las cirugías no hay problema. Con movimientos específicos se ve limitada. Problemas mas constatados con el mando. Se ha cambiado el mismo hace menos de un mes con un importe de unos 2.5k',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q4-1' // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q5',
+                marca: 'GETINGE',
+                modelo: 'ALPHAMAX',
+                anio: '2007',
+                observaciones: 'Mesa con problemas de carenado y cuadro de control. Entre 3 mesas que estaban con problemas de carenado, hemos conseguido hacer un Frankestein y dejar una de ellas montada. Las otras dos presentan este problema. No es funcional, pero si de asepsia y seguridad del paciente. Su adecuación asciende a 8.512,93€ ya que esta concretamente requiere cambio de cuadro de control (carcasa azul):',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q5-1', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q5-2', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q5-3'  // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q6',
+                marca: 'GETINGE',
+                modelo: 'ALPHAMAX',
+                anio: '2007',
+                observaciones: 'Esta es la que hemos conseguido salvar de las 3 mesas que se encontraban en la misma situación. Por el momento aguanta con los arreglos. Los problemas mas habituales son de carenado y de mando. El mando de este modelo cuesta unos 1300€',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q6-1', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q6-2'  // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q8',
+                marca: 'GETINGE',
+                modelo: 'ALPHAMAX',
+                anio: '2007',
+                observaciones: '(QUIROFANO SIN MONTAR) Mesa con problemas de carenado y cuadro de control. Entre 3 mesas que estaban con problemas de carenado, hemos conseguido hacer un Frankestein y dejar una de ellas montada. Las otras dos presentan este problema. No es funcional, pero si de asepsia y seguridad del paciente. Su adecuación asciende a 8.512,93€ ya que esta concretamente requiere cambio de cuadro de control (carcasa azul):',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q8-1', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q8-2', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q8-3'  // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q9',
+                marca: 'STERIS',
+                modelo: 'SURGI I32',
+                anio: '2015',
+                observaciones: 'Mesa sencilla y polivalente. Es la hermana mas antigua de la CMAX que está en el Q4. Mismas limitaciones que la anterior. No da muchos problemas',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q9-1' // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q10',
+                marca: 'GETINGE',
+                modelo: 'MEERA',
+                anio: '2023',
+                observaciones: 'Una de las mejores mesas que tenemos. Las averías mas frecuentes son en el mando. Es una de las que mas gustan por su versatilidad y complejidad de movimientos.',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q10-1' // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'Q11',
+                marca: 'GETINGE',
+                modelo: 'CORIN',
+                anio: '2023',
+                observaciones: 'La joya de la Corona!! Es la mesa que se usa con los Da Vincis.',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Q11-1' // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            },
+            {
+                id: 'RESERVA',
+                marca: 'MATCHANA',
+                modelo: 'ALM',
+                anio: '1995',
+                observaciones: 'Mesa bastante dura que ahora han cogido los tarumas como habitual para hacer caderas por este motivo. Rango muy limitado de movimientos incluso de subiuda y bajada. Además se ha detectado un problema a la hora de pasarle revisión preventiva ya que el test de seguridad eléctrica no se puede realizar por esta manipulada (por nosotros mismos para que pudiese funcionar). No existen repuestos. Desde el punto de vista de seguridad paciente y auditorías, NO DEBERÍAMOS USAR ESTA MESA.',
+                imagenes: [
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Reserva-1', // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                    'https://placehold.co/600x400/3b82f6/ffffff?text=Imagen+Reserva-2'  // REEMPLAZA ESTA URL CON LA URL REAL DE TU IMAGEN
+                ]
+            }
+        ];
+
+        const mainPage = document.getElementById('mainPage');
+        const quirDetailContainer = document.getElementById('quirDetailContainer');
+        const buttonsContainer = mainPage.querySelector('.grid');
+
+        // Función para mostrar la página principal y ocultar los detalles
+        function showMainPage() {
+            mainPage.style.display = 'flex';
+            quirDetailContainer.innerHTML = ''; // Limpiar contenido de detalles
+        }
+
+        // Función para mostrar los detalles de un quirófano específico
+        function showQuirurgoDetail(quirurgoId) {
+            mainPage.style.display = 'none'; // Ocultar página principal
+            quirDetailContainer.innerHTML = ''; // Limpiar contenido anterior
+
+            const quirurgo = quirurgosData.find(q => q.id === quirurgoId);
+
+            if (quirurgo) {
+                const detailPage = document.createElement('div');
+                detailPage.className = 'quir-detail-page';
+                detailPage.innerHTML = `
+                    <h2 class="text-3xl font-bold text-center mb-6">${quirurgo.id}</h2>
+                    <p class="detail-text"><strong>MARCA:</strong> ${quirurgo.marca}</p>
+                    <p class="detail-text"><strong>MODELO:</strong> ${quirurgo.modelo}</p>
+                    <p class="detail-text"><strong>AÑO FABRICACIÓN:</strong> ${quirurgo.anio}</p>
+                    <p class="detail-text"><strong>ESTADO/OBSERVACIONES:</strong> ${quirurgo.observaciones}</p>
+                    <div class="mt-8">
+                        ${quirurgo.imagenes.map(imgSrc => `<img src="${imgSrc}" alt="Imagen de ${quirurgo.id}" class="mb-4">`).join('')}
+                    </div>
+                    <button class="back-button" onclick="showMainPage()">Volver a Quirófanos</button>
+                `;
+                quirDetailContainer.appendChild(detailPage);
+                // Asegurarse de que la página de detalles sea visible
+                detailPage.style.display = 'block';
+            }
+        }
+
+        // Generar dinámicamente los botones de los quirófanos
+        quirurgosData.forEach(quirurgo => {
+            const button = document.createElement('button');
+            button.className = 'quir-button';
+            button.textContent = `Quirófano ${quirurgo.id}`;
+            button.onclick = () => showQuirurgoDetail(quirurgo.id);
+            buttonsContainer.appendChild(button);
+        });
+
+        // Asegurarse de que la página principal se muestre al cargar
+        showMainPage();
+    </script>
+</body>
+</html>
